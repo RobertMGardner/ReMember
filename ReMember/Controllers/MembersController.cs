@@ -25,6 +25,9 @@ namespace ReMember.Controllers
             ViewData["FirstNameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "first_name_desc" : "";
             ViewData["LastNameSortParm"] = sortOrder == "last_name" ? "last_name_desc" : "last_name";
 
+            ViewData["FNIcon"] = "sort";
+            ViewData["LNIcon"] = "sort";
+
 
             var members = from m in _context.Member
                           select m;
@@ -33,18 +36,26 @@ namespace ReMember.Controllers
             {
                 case "first_name_desc":
                     members = members.OrderByDescending(s => s.MemberFirstName);
+                    ViewData["FNIcon"] = "keyboard_arrow_down";
+                    ViewData["LNIcon"] = "sort";
                     break;
 
                 case "last_name_desc":
                     members = members.OrderByDescending(s => s.MemberLastName);
+                    ViewData["FNIcon"] = "sort";
+                    ViewData["LNIcon"] = "keyboard_arrow_down";
                     break;
 
                 case "last_name":
                     members = members.OrderBy(s => s.MemberLastName);
+                    ViewData["FNIcon"] = "sort";
+                    ViewData["LNIcon"] = "keyboard_arrow_up";
                     break;
 
                 default:
                     members = members.OrderBy(s => s.MemberFirstName);
+                    ViewData["FNIcon"] = "keyboard_arrow_up";
+                    ViewData["LNIcon"] = "sort";
                     break;
             }
 
